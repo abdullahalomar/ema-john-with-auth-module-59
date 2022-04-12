@@ -1,6 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import './Login.css'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCoffee } from '@fortawesome/free-solid-svg-icons';
 
 const Login = () => {
     return (
@@ -27,9 +29,12 @@ const Login = () => {
                     <p><span className='form-link-text'>New To Ema-John?</span> <Link className='form-link' to="/signup">Create an account</Link></p>
                     <div className='form-line'>
                         <div className='line'></div>
-                        <div>or</div>
+                        or
                         <div className='line'></div>
-                   </div>
+                    </div>
+                    
+                    <button className="input-button"> Continue With Google</button>
+                
             </div>
             </div>
         </div>
