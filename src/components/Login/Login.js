@@ -1,10 +1,38 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import './Login.css'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCoffee } from '@fortawesome/free-solid-svg-icons';
+import React, { useState } from 'react';
+import { useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth';
+import { Link, useNavigate } from 'react-router-dom';
+import auth from '../../firebase.init';
+import './Login.css';
+// import 'bootstrap/dist/css/bootstrap.min.css';
 
 const Login = () => {
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [
+        signInWithEmailAndPassword,
+        user,
+        loading,
+        error,
+    ] = useSignInWithEmailAndPassword(auth);
+    const navigate = useNavigate();
+
+    const handleEmailBlur = event => {
+        setEmail(event.target.value);
+    }
+
+    const handlePasswordBlur = event => {
+        setPassword(event.target.value);
+    }
+
+    if (user) {
+        navigate('/shop');
+    }
+
+    const handleUserSignIn = event => {
+        event.preventDefault();
+        signInWithEmailAndPassword(email, password);
+    }
+
     return (
         <div className='form-container'>
             <div className='form-shadow'>
@@ -13,15 +41,19 @@ const Login = () => {
             <div className='form-shadow'>
             <div>
             <h2 className='form-title'>Login</h2>
-                <form>
+                <form onSubmit={handleUserSignIn}>
                 <div className="input-group">
                 <label htmlFor="email">Email</label>
-                <input type="email" name='email' placeholder='email'/>
+                <input onBlur={handleEmailBlur} type="email" name='email' placeholder='email' required/>
                 </div>
                 <div className="input-group">
                     <label htmlFor="password">Password</label>
-                    <input type="password" name='password' placeholder='password'/>
-                </div>
+                    <input onBlur={handlePasswordBlur} type="password" name='password' placeholder='password' required/>
+                        </div>
+                        <h5 style={{ color: 'red' }}>{error?.message}</h5>
+                        {
+                            loading && <h5>Loading...</h5>
+                        }
                 <div className="input-submit">
                     <input className='from-submit' type="submit" value="Login"/>
                 </div>
