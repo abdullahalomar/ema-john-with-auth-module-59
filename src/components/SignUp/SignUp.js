@@ -9,6 +9,7 @@ const SignUp = () => {
     const [confirmPassword, setConfirmPassword] = useState('');
     const [error, setError] = useState('');
     const navigate = useNavigate();
+    
     const [createUserWithEmailAndPassword, user] = useCreateUserWithEmailAndPassword(auth);
 
     const handleEmailBlur = event => { 
@@ -38,6 +39,7 @@ const SignUp = () => {
         createUserWithEmailAndPassword(email, password);
 
     }
+    
     return (
         <div className='form-container'>
             <div className='form-shadow'>
